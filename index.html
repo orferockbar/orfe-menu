@@ -473,11 +473,31 @@
     </div>
   </div>
 </div>
+
+<!-- GITHUB TOKEN MODAL -->
+<div class="modal-overlay" id="tokenModal">
+  <div class="modal">
+    <button class="modal-close" data-close="tokenModal">×</button>
+    <h3>GitHub'a Bağlan</h3>
+    <p class="hint">Değişiklikleri doğrudan siteye kaydetmek için bir kerelik erişim anahtarı (token) gerekiyor. Bu anahtar hiçbir yere kaydedilmez, sadece bu sekmeyi kapatana kadar hafızada tutulur.</p>
+    <label for="ghTokenInput">GitHub Token</label>
+    <input type="password" id="ghTokenInput" placeholder="github_pat_...">
+    <div class="modal-actions">
+      <button class="btn primary" id="btnTokenSave">Bağlan ve Kaydet</button>
+    </div>
+  </div>
+</div>
+
 <script>
 (function(){
 
 const ADMIN_PASSWORD = "heavyfcknmetal666";
 const STORAGE_FILENAME = "./orfe-menu-data.json";
+const GH_OWNER = "orferockbar";
+const GH_REPO = "orfe-menu";
+const GH_PATH = "orfe-menu-data.json";
+const GH_BRANCH = "main";
+let githubToken = null;
 
 const DEFAULT_DATA = {
   categories: [
@@ -790,9 +810,8 @@ $("#btnColorsReset").addEventListener("click", () => {
   applyColors();
 });
 
-/* ---------- EXPORT / IMPORT ---------- */
-$("#btnExport").addEventListener("click", () => {
-  const payload = { categories: menuData.categories, colors: colorSettings };
+/* ---------- SAVE TO GITHUB ---------- */
+function downloadFallback(payload){
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -800,6 +819,78 @@ $("#btnExport").addEventListener("click", () => {
   a.download = "orfe-menu-data.json";
   a.click();
   URL.revokeObjectURL(url);
+}
+
+function utf8ToBase64(str){
+  return btoa(unescape(encodeURIComponent(str)));
+}
+
+async function saveToGitHub(){
+  const payload = { categories: menuData.categories, colors: colorSettings };
+  const apiUrl = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH}`;
+
+  try{
+    const getRes = await fetch(`${apiUrl}?ref=${GH_BRANCH}`, {
+      headers: { "Authorization": `Bearer ${githubToken}`, "Accept": "application/vnd.github+json" }
+    });
+    if(!getRes.ok){
+      if(getRes.status === 401 || getRes.status === 403){ throw new Error("AUTH"); }
+      if(getRes.status !== 404){ throw new Error("GET_FAILED"); }
+    }
+    const getData = getRes.ok ? await getRes.json() : null;
+    const sha = getData ? getData.sha : undefined;
+
+    const body = {
+      message: "Menü güncellendi (Ayarlar panelinden)",
+      content: utf8ToBase64(JSON.stringify(payload, null, 2)),
+      branch: GH_BRANCH
+    };
+    if(sha) body.sha = sha;
+
+    const putRes = await fetch(apiUrl, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${githubToken}`,
+        "Accept": "application/vnd.github+json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+
+    if(!putRes.ok){
+      if(putRes.status === 401 || putRes.status === 403){ throw new Error("AUTH"); }
+      throw new Error("PUT_FAILED");
+    }
+
+    alert("✅ Kaydedildi! Site birkaç dakika içinde güncellenecek.");
+  } catch(err){
+    if(err.message === "AUTH"){
+      githubToken = null;
+      alert("Token geçersiz veya yetkisi yetersiz. Lütfen yeni bir token oluşturup tekrar dene.");
+      openTokenModal();
+    } else {
+      const wantsDownload = confirm("GitHub'a kaydedilemedi (bağlantı sorunu olabilir). Bunun yerine dosyayı indirip elle yüklemek ister misin?");
+      if(wantsDownload) downloadFallback(payload);
+    }
+  }
+}
+
+function openTokenModal(){
+  $("#ghTokenInput").value = "";
+  $("#tokenModal").classList.add("open");
+}
+
+$("#btnExport").addEventListener("click", () => {
+  if(!githubToken){ openTokenModal(); return; }
+  saveToGitHub();
+});
+
+$("#btnTokenSave").addEventListener("click", () => {
+  const val = $("#ghTokenInput").value.trim();
+  if(!val){ alert("Token boş olamaz."); return; }
+  githubToken = val;
+  closeModal("tokenModal");
+  saveToGitHub();
 });
 
 /* ---------- LOAD ---------- */
