@@ -1,0 +1,172 @@
+{
+  "categories": [
+    {
+      "id": "c1",
+      "name": "Beers",
+      "items": [
+        {
+          "id": "i1",
+          "name": "Iron Pilsner",
+          "desc": "Hafif, soğuk, klasik.",
+          "price": "150",
+          "tag": ""
+        },
+        {
+          "id": "i2",
+          "name": "Sabbath Stout",
+          "desc": "Koyu, yoğun, kavrulmuş malt.",
+          "price": "180",
+          "tag": ""
+        },
+        {
+          "id": "i3",
+          "name": "Priest IPA",
+          "desc": "Şerbetçiotu ağırlıklı, sert.",
+          "price": "170",
+          "tag": "FAVORİ"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "name": "Spirits",
+      "items": [
+        {
+          "id": "i4",
+          "name": "Whiskey",
+          "desc": "Tek başına, buzla ya da düz.",
+          "price": "250",
+          "tag": ""
+        },
+        {
+          "id": "i5",
+          "name": "Votka",
+          "desc": "Buzlu servis.",
+          "price": "200",
+          "tag": ""
+        },
+        {
+          "id": "i6",
+          "name": "Rakı",
+          "desc": "Buzlu su ile.",
+          "price": "180",
+          "tag": ""
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "name": "Cocktails",
+      "items": [
+        {
+          "id": "i7",
+          "name": "Blackened Blood",
+          "desc": "Votka, kırmızı meyve, misket limonu.",
+          "price": "220",
+          "tag": "FAVORİ"
+        },
+        {
+          "id": "i8",
+          "name": "Iron Maiden's Kiss",
+          "desc": "Cin, mürver çiçeği, misket limonu.",
+          "price": "240",
+          "tag": ""
+        },
+        {
+          "id": "i9",
+          "name": "Requiem",
+          "desc": "Mezcal, ateş suyu, tarçın.",
+          "price": "260",
+          "tag": ""
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "name": "Shots",
+      "items": [
+        {
+          "id": "i10",
+          "name": "Baphomet's Bite",
+          "desc": "Tekila, tabasco.",
+          "price": "90",
+          "tag": ""
+        },
+        {
+          "id": "i11",
+          "name": "Grave Digger",
+          "desc": "Jägermeister.",
+          "price": "100",
+          "tag": ""
+        },
+        {
+          "id": "i12",
+          "name": "Blood Oath",
+          "desc": "Kiraz likörü, votka.",
+          "price": "90",
+          "tag": ""
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "name": "Snacks",
+      "items": [
+        {
+          "id": "i13",
+          "name": "Karışık Kuruyemiş",
+          "desc": "",
+          "price": "80",
+          "tag": ""
+        },
+        {
+          "id": "i14",
+          "name": "Zeytin Tabağı",
+          "desc": "",
+          "price": "70",
+          "tag": ""
+        },
+        {
+          "id": "idfb2kkhv",
+          "name": "Fısssstıkk",
+          "desc": "",
+          "price": "",
+          "tag": ""
+        }
+      ]
+    },
+    {
+      "id": "c6",
+      "name": "Bites",
+      "items": [
+        {
+          "id": "i15",
+          "name": "Patates Kızartması",
+          "desc": "",
+          "price": "150",
+          "tag": ""
+        },
+        {
+          "id": "i16",
+          "name": "Soğan Halkası",
+          "desc": "",
+          "price": "140",
+          "tag": ""
+        },
+        {
+          "id": "i17",
+          "name": "Peynir Tabağı",
+          "desc": "Karışık peynir seçkisi.",
+          "price": "200",
+          "tag": ""
+        }
+      ]
+    }
+  ],
+  "colors": {
+    "void": "#0a0908",
+    "bone": "#e8e2d3",
+    "ember": "#c1121f",
+    "brass": "#a8874f"
+  }
+}
