@@ -483,7 +483,8 @@
     <label for="ghTokenInput">GitHub Token</label>
     <input type="password" id="ghTokenInput" placeholder="github_pat_...">
     <div class="modal-actions">
-      <button class="btn primary" id="btnTokenSave">Bağlan ve Kaydet</button>
+      <button class="btn primary" id="btnTokenSave">Kaydet</button>
+      <button class="btn ghost" id="btnTokenCancel">İptal</button>
     </div>
   </div>
 </div>
@@ -811,16 +812,6 @@ $("#btnColorsReset").addEventListener("click", () => {
 });
 
 /* ---------- SAVE TO GITHUB ---------- */
-function downloadFallback(payload){
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "orfe-menu-data.json";
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
 function utf8ToBase64(str){
   return btoa(unescape(encodeURIComponent(str)));
 }
@@ -869,8 +860,7 @@ async function saveToGitHub(){
       alert("Token geçersiz veya yetkisi yetersiz. Lütfen yeni bir token oluşturup tekrar dene.");
       openTokenModal();
     } else {
-      const wantsDownload = confirm("GitHub'a kaydedilemedi (bağlantı sorunu olabilir). Bunun yerine dosyayı indirip elle yüklemek ister misin?");
-      if(wantsDownload) downloadFallback(payload);
+      alert("GitHub'a kaydedilemedi. İnternet bağlantını kontrol edip tekrar dene.");
     }
   }
 }
@@ -891,6 +881,10 @@ $("#btnTokenSave").addEventListener("click", () => {
   githubToken = val;
   closeModal("tokenModal");
   saveToGitHub();
+});
+
+$("#btnTokenCancel").addEventListener("click", () => {
+  closeModal("tokenModal");
 });
 
 /* ---------- LOAD ---------- */
