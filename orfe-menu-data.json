@@ -24,6 +24,13 @@
           "desc": "Şerbetçiotu ağırlıklı, sert.",
           "price": "170",
           "tag": "FAVORİ"
+        },
+        {
+          "id": "idifu1bef",
+          "name": "oguz",
+          "desc": "test",
+          "price": "100",
+          "tag": "deneme"
         }
       ]
     },
@@ -173,7 +180,7 @@
   "colors": {
     "void": "#0a0908",
     "bone": "#e8e2d3",
-    "ember": "#c1121f",
-    "brass": "#a8874f"
+    "ember": "#813237",
+    "brass": "#d48d11"
   }
 }
